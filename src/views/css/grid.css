@@ -1,0 +1,21 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+
+.mainFxmlClass
+{
+ -fx-background-image: url("../imgs/grass.png");
+}
+.user
+{
+   -fx-background-image: url("../imgs/sign.png");
+   -fx-background-size:200;
+   -fx-font-size:23;
+  
+}
+.score
+{
+  -fx-font-size:29;
+  -fx-text-fill:brown;
+}

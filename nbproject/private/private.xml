@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/home/sarah/Desktop/java/TestGui/src/testgui/TestGui.java</file>
+            <file>file:/home/sarah/Desktop/java/TestGui/src/views/css/startscene.css</file>
+            <file>file:/home/sarah/Desktop/java/TestGui/src/views/avaliablePlayers.fxml</file>
+            <file>file:/home/sarah/Desktop/java/TestGui/src/views/css/modescene.css</file>
+            <file>file:/home/sarah/Desktop/java/TestGui/src/views/infoScene.fxml</file>
+            <file>file:/home/sarah/Desktop/java/TestGui/src/views/css/avaliableplayers.css</file>
+            <file>file:/home/sarah/Desktop/java/TestGui/src/controllers/GridController.java</file>
+            <file>file:/home/sarah/Desktop/java/TestGui/src/controllers/StartSceneController.java</file>
+            <file>file:/home/sarah/Desktop/java/TestGui/src/controllers/ModeSceneController.java</file>
+            <file>file:/home/sarah/Desktop/java/TestGui/src/controllers/AvaliablePlayersController.java</file>
+        </group>
+    </open-files>
+</project-private>
