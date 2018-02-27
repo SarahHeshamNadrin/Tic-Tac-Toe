@@ -14,9 +14,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import Main.Game;
+import main.Game;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import AI.Random;
+import javafx.collections.ObservableList;
+import javafx.event.Event;
+import AI.Random;
 
 /**
  * FXML Controller class
@@ -28,6 +32,7 @@ public class GridController implements Initializable {
     @FXML
     private GridPane board;
     private Game game;
+    private Node source;
 
     /**
      *
@@ -36,40 +41,93 @@ public class GridController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        game = new Game();
+        game = new Game(Game.Mode.EasyAI);
         System.out.println("initialize function");
+    }
 
+    private Node getNodeByRowColumnIndex(final int row, final int column, GridPane gridPane) {
+        Node result = null;
+        ObservableList<Node> childrens = gridPane.getChildren();
+
+        for (Node node : childrens) {
+            if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == column) {
+                result = node;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    private void easyTurnAI() {
+        int randomMove = Random.run(game);
+        setImage("/views/imgs/woodO.jpg", getNodeByRowColumnIndex(randomMove % 3, randomMove / 3, board));
     }
 
     @FXML
     private void mouseClick(MouseEvent event) {
+        source = (Node) event.getTarget();
+        Integer colIndex, rowIndex;
 
-        Node source = (Node) event.getTarget();
+        colIndex = GridPane.getColumnIndex(source);
+        rowIndex = GridPane.getRowIndex(source);
 
-        Integer colIndex = GridPane.getColumnIndex(source);
-        Integer rowIndex = GridPane.getRowIndex(source);
-        try {
-            if (game.isMoveAvailable(rowIndex, colIndex)) {
-                if (game.getTurn() == Game.State.X) {
+        if (game.getPlayMode() == Game.Mode.EasyAI) {
+            try {
+                if (game.isMoveAvailable(rowIndex, colIndex) && game.getTurn() == Game.State.X) {
                     setImage("/views/imgs/woodX.jpg", source);
-                } else if (game.getTurn() == Game.State.O) {
-                    setImage("/views/imgs/woodO.jpg", source);
-                }
-                game.move(rowIndex, colIndex);
-                if (game.isGameOver()) {
-                    Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("Information Dialog");
-                    alert.setHeaderText(null);
-                    if (game.getWinner() == Game.State.X || game.getWinner() == Game.State.O) {
-                        alert.setContentText("Player " + game.getWinner() + " wins");
-                    } else {
-                        alert.setContentText("Draw Game");
+                    game.move(rowIndex, colIndex);
+                    if (game.isGameOver()) {
+                        Alert alert = new Alert(AlertType.INFORMATION);
+                        alert.setTitle("Information Dialog");
+                        alert.setHeaderText(null);
+                        if (game.getWinner() == Game.State.X || game.getWinner() == Game.State.O) {
+                            alert.setContentText("Player " + game.getWinner() + " wins");
+                        } else {
+                            alert.setContentText("Draw Game");
+                        }
+                        alert.showAndWait();
                     }
-                    alert.showAndWait();
+                    easyTurnAI();
+                    if (game.isGameOver()) {
+                        Alert alert = new Alert(AlertType.INFORMATION);
+                        alert.setTitle("Information Dialog");
+                        alert.setHeaderText(null);
+                        if (game.getWinner() == Game.State.X || game.getWinner() == Game.State.O) {
+                            alert.setContentText("Player " + game.getWinner() + " wins");
+                        } else {
+                            alert.setContentText("Draw Game");
+                        }
+                        alert.showAndWait();
+                    }
                 }
+            } catch (Exception e) {
+                System.out.println("invalid move!");
             }
-        } catch (Exception e) {
-            System.out.println("Invalid move!");
+        } else if (game.getPlayMode() == Game.Mode.MultiplayerLocal) {
+            try {
+                if (game.isMoveAvailable(rowIndex, colIndex)) {
+                    if (game.getTurn() == Game.State.X) {
+                        setImage("/views/imgs/woodX.jpg", source);
+                    } else if (game.getTurn() == Game.State.O) {
+                        setImage("/views/imgs/woodO.jpg", source);
+                    }
+                    game.move(rowIndex, colIndex);
+                    if (game.isGameOver()) {
+                        Alert alert = new Alert(AlertType.INFORMATION);
+                        alert.setTitle("Information Dialog");
+                        alert.setHeaderText(null);
+                        if (game.getWinner() == Game.State.X || game.getWinner() == Game.State.O) {
+                            alert.setContentText("Player " + game.getWinner() + " wins");
+                        } else {
+                            alert.setContentText("Draw Game");
+                        }
+                        alert.showAndWait();
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid move!");
+            }
         }
     }
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Main;
+package main;
 import java.util.HashSet;
 
 /**
@@ -22,9 +22,14 @@ public class Game {
     public enum State {
         Blank, X, O
     }
+    
+    public enum Mode {
+        EasyAI, ModerateAI, HardAI, MultiplayerLocal, MultiplayerNetwork
+    }
 
     private State[][] board;
     private State playersTurn;
+    private Mode playMode;
     private State winner;
     private HashSet<Integer> movesAvailable;
 
@@ -34,7 +39,8 @@ public class Game {
     /**
      * Construct the Tic Tac Toe board.
      */
-    public Game() {
+    public Game(Mode playmode) {
+        this.playMode = playmode;
         board = new State[BOARD_WIDTH][BOARD_WIDTH];
         movesAvailable = new HashSet<>();
         reset();
@@ -142,6 +148,10 @@ public class Game {
     public State getTurn() {
         return playersTurn;
     }
+    
+    public Mode getPlayMode() {
+        return playMode;
+    }
 
     /**
      * Check to see who won.
@@ -237,7 +247,7 @@ public class Game {
      * @return      an identical copy of the board
      */
     public Game getDeepCopy() {
-        Game board = new Game();
+        Game board = new Game(playMode);
 
         for (int i = 0; i < board.board.length; i++) {
             board.board[i] = this.board[i].clone();
